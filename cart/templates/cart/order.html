@@ -1,0 +1,63 @@
+{% extends 'shop/base.html' %}
+
+{% block content %}
+{% load cart %}
+{% load custom_filter %}
+    <h1 class="cart_title">Your Orders</h1>
+
+    {% if order_empty %}
+    <h3 style="text-align: center; margin-bottom: 35rem; margin-top: 3rem; font-weight: 400;">You have no order. Buy Now.</h3>
+    {% else %}
+        {% for order in orders %}
+        <div class="cart_container">
+            <div class="quantity">
+                <span class="qty">Date:&nbsp;&nbsp;</span>
+                <h5 style="font-size: 15px; color: #6d6d6d;">{{ order.date|date:"d/m/Y" }}</h5>
+            </div>
+            <div class="img_section">
+                <img class="cart_img" src="{{ order.product.image.url }}" alt="">
+            </div>
+            <div class="product_section">
+                <h3 class="product_name">{{ order.product.name }}</h3>
+                <div class="quantity">
+                    <span class="qty">Quantity:&nbsp;&nbsp;</span>
+                    <h5>{{ order.quantity }}</h5>
+                </div>
+                
+            </div>
+            <div class="price_section">
+                <span class="price">Price:&nbsp;&nbsp;</span>
+                
+                <h4>{{ order.price|currency }}</h4>
+            </div>
+            <div class="cost_section">
+                <span class="price">Cost:&nbsp;&nbsp;</span>
+                <span class="total"><strong>{{ order.quantity|multiply:order.price|currency }}</strong></span>
+            </div>
+            {% if order.status %}
+            <div class="quantity">
+                <span class="qty">Status:&nbsp;&nbsp;</span>
+                <h5 style="font-size: 20px; color: #62c22b;">Completed</h5>
+            </div>
+            {% else %}
+            <div class="quantity">
+                <span class="qty">Status:&nbsp;&nbsp;</span>
+                <h5 style="font-size: 20px; color: #ff3737;">Pending</h5>
+            </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+
+
+        <hr style="margin-left: 80px; margin-right: 60px; margin-bottom: 100px;">
+
+        <div style="float: right; margin-right: 8rem; margin-top: -5rem;">
+            <span class="price">Total:&nbsp;&nbsp;</span>
+            <span class="total"><strong>{{ orders|customer_total_cost }}</h5></strong></span>
+        </div>
+
+    {% endif %}
+
+
+{% endblock %}
+

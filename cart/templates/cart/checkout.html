@@ -1,0 +1,82 @@
+{% extends 'shop/base.html' %}
+
+{% block content %}
+
+    <h1 style="text-align: center; margin-bottom: 5rem;">Checkout</h1>
+
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div style="margin: 20px 30rem 20px 30rem ; padding: 5px;">
+            <label for="inputName4" style="font-size:1.3rem; margin-right: auto">Name</label>
+            <input type="name" style="font-size:1.2rem; width: 700px; height: 40px; border-radius: 3px; padding: 8px; margin-left: 10px; border: 1px solid grey;" id="inputName4" name="name" required>
+        </div>
+        <div style="margin: 20px 30rem 20px 30rem ; padding: 5px;">
+          <label for="inputAddress" style="font-size:1.3rem; margin-right: auto">Address</label>
+          <input type="text" style="font-size:1.2rem; width: 700px; height: 40px; border-radius: 3px; padding: 8px; margin-left: 10px; border: 1px solid grey;" id="inputAddress" placeholder="1234 Main St" name="address" required>
+        </div>
+        <div style="margin: 20px 30rem 20px 30rem ; padding: 5px;">
+          <label for="inputAddress2" style="font-size:1.3rem; margin-right: auto">Address 2</label>
+          <input type="text" style="font-size:1.2rem; width: 700px; height: 40px; border-radius: 3px; padding: 8px; margin-left: 10px; border: 1px solid grey;" id="inputAddress2" placeholder="Apartment, studio, or floor" name="address2">
+        </div>
+        <div style="margin: 20px 30rem 20px 30rem ; padding: 5px;">
+          <label for="inputCity" style="font-size:1.3rem; margin-right: auto">City</label>
+          <input type="text" style="font-size:1.2rem; width: 700px; height: 40px; border-radius: 3px; padding: 8px; margin-left: 10px; border: 1px solid grey;" id="inputCity" name="city" required>
+        </div>
+        <div style="margin: 20px 30rem 20px 30rem ; padding: 5px;">
+          <label for="inputState" style="font-size:1.3rem; margin-right: auto">State</label>
+          <select id="inputState" style="font-size:1.2rem; width: 700px; height: 40px; border-radius: 3px; padding: 8px; margin-left: 10px; border: 1px solid grey;" name="state" required>
+            <option selected>No selected </option>
+            <option>Andaman and Nicobar (UT)</option>
+            <option>Andhra Pradesh</option>
+            <option>Arunachal Pradesh</option>
+            <option>	Assam</option>
+            <option>Bihar</option>
+            <option>Chandigarh (UT)</option>
+            <option>Chhattisgarh</option>
+            <option>	Dadra and Nagar Haveli (UT)</option>
+            <option>	Daman and Diu (UT)</option>
+            <option>Delhi</option>
+            <option>Goa</option>
+            <option>Gujarat</option>
+            <option>	Himachal Pradesh</option>
+            <option>Jammu and Kashmir</option>
+            <option>Jharkhand</option>
+            <option>Karnataka</option>
+            <option>Kerala</option>
+            <option>Lakshadweep (UT)</option>
+            <option>Madhya Pradesh</option>
+            <option>Maharashtra</option>
+            <option>Manipur</option>
+            <option>Meghalaya</option>
+            <option>Mizoram</option>
+            <option>Nagaland</option>
+            <option>Orissa</option>
+            <option>Puducherry (UT)</option>
+            <option>Punjab</option>
+            <option>Rajasthan</option>
+            <option>Sikkim</option>
+            <option>	Tamil Nadu</option>
+            <option>Telangana</option>
+            <option>Tripura</option>
+            <option>Uttar Pradesh</option>
+            <option>Uttarakhand</option>
+            <option>	West Bengal</option>
+            
+
+          </select>
+        </div>
+        <div style="margin: 20px 30rem 20px 30rem ; padding: 5px;">
+          <label for="inputZip" style="font-size:1.3rem; margin-right: auto">Pincode</label>
+          <input type="text" style="font-size:1.2rem; width: 700px; height: 40px; border-radius: 3px; padding: 8px; margin-left: 10px; border: 1px solid grey;" id="inputZip" name="pin" required>
+        </div>
+        <div style="margin: 20px 30rem 20px 30rem ; padding: 5px;">
+          <label for="inputPhone" style="font-size:1.3rem; margin-right: auto">Phone Number</label>
+          <input type="text" style="font-size:1.2rem; width: 700px; height: 40px; border-radius: 3px; padding: 8px; margin-left: 10px; border: 1px solid grey;" id="inputPhone" name="phone" required>
+        </div>
+        <div style="margin: 20px 30rem 20px 30rem ; padding: 5px;">
+          <button type="submit" style="color: #ffffe0; font-size:1.2rem; padding: 5px 20px; margin: 5px; background-color: #203fa5; border: 1px solid #203fa5; border-radius: 3px; float: right; box-shadow: 0 0 10px 0 #6d7172;">Place Order</button>
+        </div>
+      </form>
+
+
+{% endblock %}
