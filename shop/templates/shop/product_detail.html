@@ -1,0 +1,62 @@
+{% extends 'shop/base.html' %}
+
+{% block content %}
+{% load cart %}
+{% load custom_filter %}
+    <div class="product_detail_container" id="{{ product.id }}">
+        <div class="productimage">
+            <div class="big_image_container">
+                <img class="bigimage" src="{{ product.image.url }}" alt="">
+            </div>
+            <div class="small_image_container">
+                <img class="smallimage" src="{{ product.image.url }}" alt="">
+                <img class="smallimage" src="" alt="">
+                <img class="smallimage" src="" alt="">
+                <img class="smallimage" src="" alt="">
+                <img class="smallimage" src="" alt="">
+            </div>
+        </div>
+        <div class="product">
+            <h2 class="product_name">{{ product.name }}</h2>
+            
+            <p class="product_description">Description:&nbsp{{ product.description }}
+                <div class="price">Price:</span>
+                <strong class="rupee">{{ product.price|currency }}</strong>
+            </p>
+            <br>
+            <br>
+            <br>
+            <br>
+
+            {% if product|is_in_cart:request.session.cart %}
+                            
+                <div class="cartbtncontainer">
+                    <form action="{% url 'product-detail' id=product.id slug=product.slug %}" method="post">
+                    {% csrf_token %}
+                        <input type="hidden" name="product" value="{{ product.id }}">
+                        <input type="hidden" name="remove" value="True">
+                        <input class="minusBtn" type="submit" value="-"></input>
+                    </form>
+                    <span class="middlegap">{{ product|cart_count:request.session.cart }}</span>
+                    <form action="{% url 'product-detail' id=product.id slug=product.slug %}" method="post">
+                    {% csrf_token %}
+                        <input type="hidden" name="product" value="{{ product.id }}">   
+                        <input class="plusBtn" type="submit" value="+"></input>
+                    </form> 
+                </div>
+                
+            {% else %}
+                <form action="{% url 'product-detail' id=product.id slug=product.slug %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="product" value="{{ product.id }}">
+                    <input class="cartBtn" type="submit" value="Add to Cart"></input>
+                </form>
+            {% endif %}
+                        
+            <input class="cartBtn buyNow" type="submit" value="Buy Now"></input>
+        </div>
+    </div>
+
+
+
+{% endblock %}

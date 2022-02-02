@@ -1,0 +1,78 @@
+{% extends 'shop/base.html' %}
+
+{% block content %}
+{% load cart %}
+{% load custom_filter %}
+
+<div class="grid-container">
+    <h2>All Categories</h2>
+    {% for category in categories %}
+    <a  class="category_img" href="{% url 'category-products' category_slug=category.slug %}">
+        <div class="item_{{ forloop.counter }}">
+            <div>
+                <p style="text-align: center; font-size: large; background-color: rgb(163, 208, 230);">{{ category.name }}</p>
+            </div>
+        </div>
+    </a>
+    {% endfor %}
+</div>
+
+<h1 class="align-center">Shop By Category</h1>
+<div class="products">
+    {% for category in categories %}
+        <h3 class="category_name">{{ category.name }}</h3>
+        <a href="{% url 'category-products' category_slug=category.slug %}" class="view_all">View All</a>
+        <span class="card_group">
+        {% for product in category.get_products %}
+            {% if forloop.counter < 7 %}
+               <!-- card -->
+            <div class="card" id="{{ product.id }}">
+                <img src="{{ product.image.url }}" alt="Avatar" style="height: 275px; width: 275px;">
+                <div class="card-desc">
+                    <h4>{{ product.name|truncatewords:3|title }}</h4>
+                    <p id="p_desc">{{ product.description|truncatewords:6 }}</p>
+                    <span id="p_price">Price:
+                        <strong>{{ product.price|currency }}</strong>
+                    </span>
+                </div>
+
+                <div class="options">
+                    
+                        {% if product|is_in_cart:request.session.cart %}
+                            
+                            <div class="cartbtncontainer">
+                                <form action="/#{{ product.id }}" method="post">
+                                {% csrf_token %}
+                                    <input type="hidden" name="product" value="{{ product.id }}">
+                                    <input type="hidden" name="remove" value="True">
+                                    <input class="minusBtn" type="submit" value="-"></input>
+                                </form>
+                                <p class="middlegap">{{ product|cart_count:request.session.cart }}</p>
+                                <form action="/#{{ product.id }}" method="post">
+                                {% csrf_token %}
+                                    <input type="hidden" name="product" value="{{ product.id }}">   
+                                    <input class="plusBtn" type="submit" value="+"></input>
+                                </form> 
+                            </div>
+                            
+                        {% else %}
+                            <form action="/#{{ product.id }}" method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="product" value="{{ product.id }}">
+                                <input class="cartBtn" type="submit" value="Add to Cart"></input>
+                            </form>
+                        {% endif %}
+                        
+                    
+                    
+                    <a href="{% url 'product-detail' id=product.id slug=product.slug %}" class="detailBtn" type="submit">Details</a>
+                </div>
+            </div> 
+            {% endif %}
+        {% endfor %}
+        
+        </span>
+    {% endfor %}
+</div>
+
+{% endblock %}

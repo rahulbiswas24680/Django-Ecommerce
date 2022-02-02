@@ -1,0 +1,52 @@
+{% extends 'shop/base.html' %}
+
+{% block content %}
+{% load cart %}
+{% load custom_filter %}
+<div>
+    <h1 style="margin: 30px;">{{ category.name }}</h1>
+    <span class="card_group">
+        {% for product in products %}
+    <!-- card -->
+        <div id="card" class="card">
+            <img src="{{ product.image.url }}" alt="Avatar" style="height: 275px; width: 275px;">
+            <div class="card-desc">
+                <h4>{{ product.name|truncatewords:3|title }}</h4>
+                <p id="p_desc">{{ product.description|truncatewords:6 }}</p>
+                <span id="p_price">Price:
+                    <strong> {{ product.price|currency }}</strong>
+                </span>
+            </div>
+            <div class="options">
+                {% if product|is_in_cart:request.session.cart %} 
+                    <div class="cartbtncontainer">
+                        <form action="/#{{ product.id }}" method="post">
+                        {% csrf_token %}
+                            <input type="hidden" name="product" value="{{ product.id }}">
+                            <input type="hidden" name="remove" value="True">
+                            <input class="minusBtn" type="submit" value="-"></input>
+                        </form>
+                        <p class="middlegap">{{ product|cart_count:request.session.cart }}</p>
+                        <form action="/#{{ product.id }}" method="post">
+                        {% csrf_token %}
+                            <input type="hidden" name="product" value="{{ product.id }}">   
+                            <input class="plusBtn" type="submit" value="+"></input>
+                        </form> 
+                    </div>
+                    
+                {% else %}
+                    <form action="/#{{ product.id }}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="product" value="{{ product.id }}">
+                        <input class="cartBtn" type="submit" value="Add to Cart"></input>
+                    </form>
+                {% endif %}
+
+                <a href="{% url 'product-detail' id=product.id slug=product.slug %}" class="detailBtn" type="submit">Details</a>
+            </div>
+        </div>
+        {% endfor %}
+    </span>
+</div>
+
+{% endblock %}
